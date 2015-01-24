@@ -78,28 +78,17 @@ while res:
     diffVal = cv2.countNonZero(diffInverted)
     diffValList.append(diffVal)
 
-    if curFrame != startFrame:
-        #templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
-        #min_val, diffVal, min_loc, max_loc = cv2.minMaxLoc(templateRes)
+    diffValMin = 2000 ; 
 
-        if abs(lastVal - diffVal) > 100000000 and  diffVal > 10000:
-            #print 'I think we should use the last text now'
-            cv2.imwrite('out.png',inverted)
-            curText = pytesseract.image_to_string(Image.open('out.png'))
-            curText = curText.replace('\n','')
-            print 'diffVal: ', diffVal
-            print 'abs: ', abs(lastVal -diffVal)
-            print curText
-            print len(curText)
-            lastText = curText
-        lastInverted = inverted.copy()
-        lastVal = diffVal
-    else:
-        lastInverted = inverted.copy()
+    if diffVal > diffValMin:
 
-    #if curText != lastText:
-    #    print curText
-    #    lastText = curText
+        cv2.imwrite('out.png',inverted)
+        curText = pytesseract.image_to_string(Image.open('out.png'))
+        curText = curText.replace('\n','')
+        print curText
+    
+    lastInverted = inverted.copy()
+
     
     if 1:
         plt.figure(1)
