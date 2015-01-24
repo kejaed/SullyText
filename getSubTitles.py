@@ -19,8 +19,7 @@ startFrame = 5730
 skipFrames = 5 
 
 # show the movie and plot metrics or not (much faster when not)
-showGUI = 1 ; 
-
+showGUI = 0 ; 
 
 # miminum different number of pixels between frames of text to 
 # declare that we have new text
