@@ -18,6 +18,8 @@ vid = cv2.VideoCapture('/Users/ken/code/SullyText/video.mp4')
 startFrame = 5730 
 #startFrame = 7500
 
+skipFrames = 5
+
 # skip to that frame
 vid.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, startFrame); 
 
@@ -29,21 +31,27 @@ curFrame = startFrame
 
 lastText = ''
 lastVal = 0 
-# while we still have good video
-
 nonZeroList = []
 diffValList  = []
+allText = ''
 
 # matplotlib interactive mode on, non blocking
 plt.ion()
 
+firstTime = 1;
 
+showGUI = 0 ; 
+
+numFrames = vid.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT);    
 while res:
-        
-    #print "\nFrame: ",curFrame
+    curFrame = int(vid.get(cv2.cv.CV_CAP_PROP_POS_FRAMES));     
 
-    cv2.putText(image, 'Frame ' + str(curFrame),(0,25), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,255),3)
-    cv2.imshow('raw',image) 
+    print "\nFrame: %d / %d " % (curFrame , numFrames)
+    
+    if showGUI:
+        cv2.putText(image, 'Frame ' + str(curFrame),(0,25), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,255),3)
+        cv2.imshow('raw',image) 
+
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     #print image.shape
@@ -61,12 +69,14 @@ while res:
 
     # invert
     inverted = cv2.bitwise_not(thresh)
-    if curFrame == startFrame:
+    if firstTime: 
         lastInverted = inverted.copy()
 
-    #cv2.imshow('inverted',inverted)
+    if showGUI:
+        cv2.imshow('inverted',inverted)
     #print 'countNonZero: ',cv2.countNonZero(thresh) 
-    nonZeroList.append(cv2.countNonZero(thresh))
+    nonZero = cv2.countNonZero(thresh)
+    nonZeroList.append(nonZero)
     
     # listen we dont need 2 template, we need the differences between the 2 images
     #templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
@@ -78,19 +88,36 @@ while res:
     diffVal = cv2.countNonZero(diffInverted)
     diffValList.append(diffVal)
 
-    diffValMin = 2000 ; 
+    # miminum different number of pixels between frames of text to 
+    # declare that we have new text
+    diffValMin = 2000  
 
-    if diffVal > diffValMin:
-
+    # minumum number of non-zero pixels we need in text frame 
+    # to declare that we have something to decode
+    nonZeroMin = 100 
+    
+    # if the differences between the text frames
+    if (diffVal > diffValMin and nonZero > nonZeroMin) or firstTime  :
+        
+        # save the text image to disk
         cv2.imwrite('out.png',inverted)
+
+        # run the character recognition on it
         curText = pytesseract.image_to_string(Image.open('out.png'))
-        curText = curText.replace('\n','')
+        
+        # replace all newlines with spaces
+        curText = curText.replace('\n',' ')
+
+        allText = allText + ' ' + curText 
         print curText
+        text_file = open("transcript.txt", "w")
+        text_file.write("%s" % allText)
+        text_file.close()
     
     lastInverted = inverted.copy()
 
-    
-    if 1:
+    # turn the plot on or off 
+    if showGUI:
         plt.figure(1)
         plt.clf()
         plt.subplot(211)
@@ -109,6 +136,7 @@ while res:
         print "exiting!"
         break
     res,image = vid.read()
-    curFrame = curFrame + 1
+    vid.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, curFrame + skipFrames); 
+    firstTime = 0 ; 
 
 
