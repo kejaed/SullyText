@@ -8,7 +8,8 @@ The talk included subtitles embedded in the video, so this is an attempt to crea
 
 The latest raw transcript output is in [transcript.txt](https://raw.githubusercontent.com/kejaed/SullyText/master/transcript.txt).
 
-Work on formatting the trasncript after that is TBD.
+Work on formatting the trasncript from the raw transcript is going on in a Google Doc here:
+https://docs.google.com/document/d/1jCoMCCBY5VWUHY01jVSioqyrMCTInY3x2lLy2Aaox-I/edit?usp=sharing
 
 So far the experiment is using the following bits and pieces:
 
