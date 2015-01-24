@@ -6,4 +6,9 @@ A recent article on the site, [The Iron Age: Resistance Training and the Metabol
 
 The talk included subtitles, so this is an attempt to create a first draft of a transcript from the subtitles.
 
+So far the experiment is using the following bits and pieces:
+
+* Python (matplotlib, PIL)
+* OpenCV
+* Tesseract
 
