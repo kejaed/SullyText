@@ -1,6 +1,15 @@
+
+
+import sys
+import PIL.Image
+sys.modules['Image'] = PIL.Image
+
 import Image
+
+
 import cv2
 import pytesseract
+import matplotlib.pyplot as plt
 
 # open the video
 vid = cv2.VideoCapture('/Users/ken/code/SullyText/video.mp4')
@@ -21,7 +30,12 @@ curFrame = startFrame
 lastText = ''
 lastVal = 0 
 # while we still have good video
+
+nonZeroList = []
+maxValList  = []
+
 while res:
+        
     print "\nFrame: ",curFrame
     cv2.imshow('raw',image) 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -41,12 +55,22 @@ while res:
 
     # invert
     inverted = cv2.bitwise_not(thresh)
+    if curFrame == startFrame:
+        lastInverted = inverted.copy()
+
     #cv2.imshow('inverted',inverted)
     print 'countNonZero: ',cv2.countNonZero(thresh) 
+    nonZeroList.append(cv2.countNonZero(thresh))
+    
+    templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(templateRes)
+    
+    maxValList.append(max_val)
 
     if curFrame != startFrame:
-        templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
-        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(templateRes)
+        #templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
+        #min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(templateRes)
+
         if abs(lastVal - max_val) > 100000000 and  max_val > 10000:
             #print 'I think we should use the last text now'
             cv2.imwrite('out.png',inverted)
@@ -66,19 +90,17 @@ while res:
     #    print curText
     #    lastText = curText
 
+    plt.ion() 
+    plt.plot(maxValList)
+    #plt.draw()
 
 
-    # compare to last one
 
-    # if it's different enough, declare new text and do OCR on it
-    # review the link from https://news.ycombinator.com/item?id=8912219
-    # which is http://www.danvk.org/2015/01/09/extracting-text-from-an-image-using-ocropus.html
-    
     # stop if someone presses escape
     key = cv2.waitKey(100)
-    #if key  == 27:
-    #    print "exiting!"
-    #    break
+    if key  == 27:
+        print "exiting!"
+        break
     res,image = vid.read()
     curFrame = curFrame + 1
 
