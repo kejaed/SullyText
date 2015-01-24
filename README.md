@@ -13,6 +13,10 @@ https://docs.google.com/document/d/1jCoMCCBY5VWUHY01jVSioqyrMCTInY3x2lLy2Aaox-I/
 
 If you would like to help with the formatting of the transcript, please email me at ken@kje.ca
 
+Some notes:
+* the default values for parameters that detect a change in the text are too high, some text was missed. It was not bad enough to re-run the script and start the eddited transcriptinon file over.
+* There is a long stretch in the middle with no in-line subtitles. This was trasnscribed by hand, and sucked. Any errors in here are obviously mine. Please send fixes to the above address or submit a pull request if you know what that means.
+
 So far the experiment is using the following bits and pieces:
 
 * Python (matplotlib, PIL)
