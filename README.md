@@ -6,6 +6,10 @@ A recent article on the site, [The Iron Age: Resistance Training and the Metabol
 
 The talk included subtitles embedded in the video, so this is an attempt to create a first draft of a transcript from the subtitles.
 
+The latest raw transcript output is in [transcript.txt](https://raw.githubusercontent.com/kejaed/SullyText/master/transcript.txt).
+
+Work on formatting the trasncript after that is TBD.
+
 So far the experiment is using the following bits and pieces:
 
 * Python (matplotlib, PIL)
