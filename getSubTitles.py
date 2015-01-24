@@ -16,7 +16,7 @@ vid = cv2.VideoCapture('/Users/ken/code/SullyText/video.mp4')
 
 # this is where the subtitles start to come in 5730
 startFrame = 5730 
-startFrame = 7500
+#startFrame = 7500
 
 # skip to that frame
 vid.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, startFrame); 
@@ -32,16 +32,22 @@ lastVal = 0
 # while we still have good video
 
 nonZeroList = []
-maxValList  = []
+diffValList  = []
+
+# matplotlib interactive mode on, non blocking
+plt.ion()
+
 
 while res:
         
-    print "\nFrame: ",curFrame
+    #print "\nFrame: ",curFrame
+
+    cv2.putText(image, 'Frame ' + str(curFrame),(0,25), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,255),3)
     cv2.imshow('raw',image) 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     #print image.shape
-    # image is 360,640
+    # note: image is 360,640
 
     # extract the bottom part with text in it
     textImage = image[277:360,:]
@@ -59,40 +65,52 @@ while res:
         lastInverted = inverted.copy()
 
     #cv2.imshow('inverted',inverted)
-    print 'countNonZero: ',cv2.countNonZero(thresh) 
+    #print 'countNonZero: ',cv2.countNonZero(thresh) 
     nonZeroList.append(cv2.countNonZero(thresh))
     
-    templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(templateRes)
+    # listen we dont need 2 template, we need the differences between the 2 images
+    #templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
+    #print 'temp res size: ', templateRes.shape
+    # sinse we have a template comparison with image of the same size, it's result is going to be 
+    #diffVal = templateRes[0,0]
     
-    maxValList.append(max_val)
+    diffInverted = abs(inverted - lastInverted) ; 
+    diffVal = cv2.countNonZero(diffInverted)
+    diffValList.append(diffVal)
 
     if curFrame != startFrame:
         #templateRes = cv2.matchTemplate(inverted,lastInverted,cv2.TM_CCOEFF)
-        #min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(templateRes)
+        #min_val, diffVal, min_loc, max_loc = cv2.minMaxLoc(templateRes)
 
-        if abs(lastVal - max_val) > 100000000 and  max_val > 10000:
+        if abs(lastVal - diffVal) > 100000000 and  diffVal > 10000:
             #print 'I think we should use the last text now'
             cv2.imwrite('out.png',inverted)
             curText = pytesseract.image_to_string(Image.open('out.png'))
             curText = curText.replace('\n','')
-            print 'max_val: ', max_val
-            print 'abs: ', abs(lastVal -max_val)
+            print 'diffVal: ', diffVal
+            print 'abs: ', abs(lastVal -diffVal)
             print curText
             print len(curText)
             lastText = curText
         lastInverted = inverted.copy()
-        lastVal = max_val
+        lastVal = diffVal
     else:
         lastInverted = inverted.copy()
 
     #if curText != lastText:
     #    print curText
     #    lastText = curText
-
-    plt.ion() 
-    plt.plot(maxValList)
-    #plt.draw()
+    
+    if 1:
+        plt.figure(1)
+        plt.clf()
+        plt.subplot(211)
+        plt.plot(diffValList)
+        plt.title('diffValList')
+        plt.subplot(212)
+        plt.plot(nonZeroList)
+        plt.title('nonZeroList')
+        #plt.draw()
 
 
 
