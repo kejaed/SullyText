@@ -12,3 +12,5 @@ So far the experiment is using the following bits and pieces:
 * OpenCV
 * Tesseract
 
+Screenshot with the GUI turned on:
+![Screenshot of code running](https://raw.githubusercontent.com/kejaed/SullyText/master/running.png)
