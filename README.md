@@ -11,6 +11,8 @@ The latest raw transcript output is in [transcript.txt](https://raw.githubuserco
 Work on formatting the trasncript from the raw transcript is going on in a Google Doc here:
 https://docs.google.com/document/d/1jCoMCCBY5VWUHY01jVSioqyrMCTInY3x2lLy2Aaox-I/edit?usp=sharing
 
+If you would like to help with the formatting of the transcript, please email me at ken@kje.ca
+
 So far the experiment is using the following bits and pieces:
 
 * Python (matplotlib, PIL)
