@@ -28,8 +28,8 @@ Screenshot with the GUI turned on:
 * "raw": the raw frame from the video with the frame number added in red
 * "inverted": the black-background text portion of the frame has each pixel inverted
 * "Figure 1": plotting of two metrics that look at the text
-** diffValList: taking two consecutive frames and subtracting one from the other, this is the number of non-zero pixels, or, the number of pixels that are different between the two frames.
-** nonZeroList: the number of non-zero pixels in the black-background frame. This is the number of pixels of text in the frame
+   * diffValList: taking two consecutive frames and subtracting one from the other, this is the number of non-zero pixels, or, the number of pixels that are different between the two frames.
+   * nonZeroList: the number of non-zero pixels in the black-background frame. This is the number of pixels of text in the frame
 * Top right screen: contains the output of the program running, which is the detected text from each frame
 * "getSubTitles.py": the code editor 
 ![Screenshot of code running](https://raw.githubusercontent.com/kejaed/SullyText/master/running.png)
