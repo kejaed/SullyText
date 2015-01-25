@@ -6,7 +6,7 @@ A recent article on the site, [The Iron Age: Resistance Training and the Metabol
 
 The talk included subtitles embedded in (most of) the video, so this is an attempt to create a first draft of a transcript from the subtitles. The engineer in me just couldn't resist.
 
-The latest raw transcript output is in [transcript.txt](https://raw.githubusercontent.com/kejaed/SullyText/master/transcript.txt).
+When the program is run, it creates an output file with one big long block of text. The latest output from the program is in [transcript.txt](https://raw.githubusercontent.com/kejaed/SullyText/master/transcript.txt). This raw output is of little use to anyone.
 
 Work on formatting the trasncript from the raw transcript, as well as adding text from the audio-only parts with no subtitles, can be found in this Google Doc:
 https://docs.google.com/document/d/1jCoMCCBY5VWUHY01jVSioqyrMCTInY3x2lLy2Aaox-I/edit?usp=sharing
@@ -14,10 +14,10 @@ https://docs.google.com/document/d/1jCoMCCBY5VWUHY01jVSioqyrMCTInY3x2lLy2Aaox-I/
 If you would like to help with the formatting of the transcript, please email me at ken@kje.ca
 
 Some notes:
-* the default values for parameters that detect a change in the text are too high, some text was missed. It was not bad enough to re-run the script and start the eddited transcriptinon file over.
-* There is a long stretch in the middle with no in-line subtitles. This was trasnscribed by hand, and sucked. Any errors in here are obviously mine. Please send fixes to the above address or submit a pull request if you know what that means.
+* In the code, the default values for parameters that detect a change in the text (diffValMin, nonZeroMin )are probably too high, some text that was displayed in the video is missing from the transcript. Mostly very short pieces of text or, as an educated guess, text with a very similar number of white pixels as the last screen of text. I had switched from a template matching score to a frame different score, and it looks like this might have been a case of premature optimization. However, it was not bad enough to re-run the script and start the eddited transcription file over. 
+* There is a long stretch in the middle of the video (the literature-review section) with no in-line subtitles. This part of the Google Doc transcript was trasnscribed by hand from the audio of the talk. Any errors in here are obviously mine. Please send fixes to the above address or submit a pull request if you know what that means.
 
-So far the experiment is using the following bits and pieces:
+As for the code, the experiment is using the following bits and pieces:
 
 * Python (matplotlib, PIL)
 * OpenCV
