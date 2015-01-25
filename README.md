@@ -8,9 +8,7 @@ The talk included subtitles embedded in (most of) the video, so this is an attem
 
 When the program is run, it creates an output file with one big long block of text. The latest output from the program is in [transcript.txt](https://raw.githubusercontent.com/kejaed/SullyText/master/transcript.txt). This raw output is of little use to anyone.
 
-To create something of some usefulness, I have started to format the transcript in a Google Doc.
-
-https://docs.google.com/document/d/1jCoMCCBY5VWUHY01jVSioqyrMCTInY3x2lLy2Aaox-I/edit?usp=sharing
+To create something of some usefulness, I have started to format the transcript in a [Google Doc](http://bit.ly/IronAgeTranscript).
 
 If you would like to help with the formatting of the transcript, please email me at ken@kje.ca
 
