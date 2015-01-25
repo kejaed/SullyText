@@ -1,6 +1,6 @@
 # SullyText: extracting text from the embedded subtitles of a video
 
-[GO STRAIGHT TO THE TRANSCRIPT](http://bit.ly/IronAgeTranscript)
+[GO STRAIGHT TO THE TRANSCRIPT IN GOOGLE DOCS](http://bit.ly/IronAgeTranscript)
 
 I am a big fan of the [Starting Strength](http://www.startingstrength.com) training methodology as well as the forums hosted at http://startingstrength.com/resources/forum/
 
