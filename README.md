@@ -27,7 +27,7 @@ As for the code, the experiment is using the following bits and pieces:
 Screenshot with the GUI turned on:
 * "raw": the raw frame from the video with the frame number added in red
 * "inverted": the black-background text portion of the frame has each pixel inverted
-* "Figure 1": plotting of two metrics that look at the text
+* "Figure 1": plotting of two metrics that look at the text. The x-axis index is the frame number from the start of the analysis (note the program can be started at an arbitrary frame and this would be 0 on the x-axis).
    * diffValList: taking two consecutive frames and subtracting one from the other, this is the number of non-zero pixels, or, the number of pixels that are different between the two frames.
    * nonZeroList: the number of non-zero pixels in the black-background frame. This is the number of pixels of text in the frame
 * Top right screen: contains the output of the program running, which is the detected text from each frame
